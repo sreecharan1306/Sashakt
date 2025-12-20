@@ -1,21 +1,23 @@
 "use client"
 import { useState, useRef, useEffect } from "react"
+import { useRouter } from "next/navigation"
 
 interface Activity {
   name: string
   description: string
   emoji: string
+  url?: string
 }
 
 const activities: Activity[] = [
-  { name: "Story Time", description: "Read a book together and discuss the story", emoji: "📖" },
-  { name: "Art & Craft", description: "Create something fun with colors and imagination", emoji: "🎨" },
-  { name: "Outdoor Play", description: "Go outside and play games together", emoji: "⚽" },
-  { name: "Cooking Together", description: "Prepare a meal together and enjoy it", emoji: "👨‍🍳" },
-  { name: "Movie Night", description: "Watch a family-friendly movie together", emoji: "🎬" },
-  { name: "Music & Dance", description: "Listen to music and dance together", emoji: "🎵" },
-  { name: "Board Games", description: "Play fun board games as a family", emoji: "🎲" },
-  { name: "Nature Walk", description: "Explore nature and learn about plants and animals", emoji: "🌳" },
+  { name: "Story Time", description: "Read a book together and discuss the story", emoji: "📖", url: "/parental-hub" },
+  { name: "Art & Craft", description: "Create something fun with colors and imagination", emoji: "🎨", url: "https://sketch.io/scribble/" },
+  { name: "Outdoor Play", description: "Go outside and play games together", emoji: "⚽", url: "/parental-hub" },
+  { name: "Cooking Together", description: "Prepare a meal together and enjoy it", emoji: "👨‍🍳", url: "/parental-hub" },
+  { name: "Movie Night", description: "Watch a family-friendly movie together", emoji: "🎬", url: "https://www.netflix.com/" },
+  { name: "Music & Dance", description: "Listen to music and dance together", emoji: "🎵", url: "https://open.spotify.com/" },
+  { name: "Board Games", description: "Play fun board games as a family", emoji: "🎲", url: "https://www.chess.com/" },
+  { name: "Nature Walk", description: "Explore nature and learn about plants and animals", emoji: "🌳", url: "/parental-hub" },
 ]
 
 interface ActivityWheelProps {
@@ -63,7 +65,25 @@ export default function ActivityWheel({ onClose }: ActivityWheelProps) {
     wheelEl.addEventListener("transitionend", onTransitionEnd)
   }
 
+  const router = useRouter()
+
   const selectedActivity = activities[selectedIndex]
+
+  const startActivity = () => {
+    if (!selectedActivity?.url) return
+
+    const url = selectedActivity.url
+
+    // If the URL is absolute (external), open in a new tab for safety/UX
+    if (/^https?:\/\//i.test(url)) {
+      // Use noopener/noreferrer for security
+      window.open(url, "_blank", "noopener,noreferrer")
+      return
+    }
+
+    // Otherwise treat as internal route
+    router.push(url)
+  }
 
   return (
     <div
@@ -159,10 +179,19 @@ export default function ActivityWheel({ onClose }: ActivityWheelProps) {
           </div>
         )}
 
+        {/* Start Activity button */}
+        <button
+          onClick={startActivity}
+          disabled={!selectedActivity?.url}
+          className="w-full mb-3 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 disabled:opacity-50 text-white font-bold py-3 sm:py-3 px-6 rounded-xl transition-all text-base sm:text-lg active:scale-95"
+        >
+          {selectedActivity?.url ? "Start Activity" : "No link available"}
+        </button>
+
         {/* Close button */}
         <button
           onClick={onClose}
-          className="w-full mt-6 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 sm:py-3 px-4 rounded-lg transition-colors text-sm sm:text-base"
+          className="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 sm:py-3 px-4 rounded-lg transition-colors text-sm sm:text-base"
         >
           Close
         </button>

@@ -43,7 +43,7 @@ export default function GamesPage() {
 
   return (
     <main className="min-h-screen flex flex-col">
-      <Navigation />
+
 
       <div className="flex-grow bg-gradient-to-br from-purple-500 via-pink-400 to-blue-400 px-4 md:px-6 py-12">
         <div className="max-w-6xl mx-auto">
@@ -85,7 +85,7 @@ export default function GamesPage() {
         </div>
       </div>
 
-      <Footer />
+
     </main>
   )
 }

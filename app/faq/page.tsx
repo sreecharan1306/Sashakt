@@ -2,11 +2,13 @@
 
 import { useState } from "react"
 import { useScrollAnimation } from "@/hooks/use-scroll-animation"
+import { useRouter } from "next/navigation"
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
   const [searchTerm, setSearchTerm] = useState("")
   const { ref, isVisible } = useScrollAnimation()
+  const router = useRouter()
 
   const faqs = [
     {
@@ -26,7 +28,7 @@ export default function FAQ() {
     {
       question: "What age range is Sashakt designed for?",
       answer:
-        "Sashakt is designed for children aged 6-14 years old. We have adapted content for different age groups to ensure maximum engagement and learning outcomes.",
+        "Sashakt is designed for children aged 6-10 years old. We have adapted content for different age groups to ensure maximum engagement and learning outcomes.",
       emoji: "👧",
       category: "Age",
     },
@@ -40,7 +42,7 @@ export default function FAQ() {
     {
       question: "Can I track my child's progress and achievements?",
       answer:
-        "Yes, parents can create accounts and track their child's progress, achievements, and learning milestones through our parental dashboard.",
+        "No. Sashakt doesn't have any tracking system as of now. However, we are working on features that will allow parents to monitor their child's learning journey and celebrate their achievements.",
       emoji: "📊",
       category: "Progress",
     },
@@ -50,6 +52,55 @@ export default function FAQ() {
         "The main goal of Sashakt is to empower children by educating them about their rights, building their confidence, and creating a safe, engaging learning environment that transcends socio-economic boundaries.",
       emoji: "⭐",
       category: "Mission",
+    },
+    {
+      question: "How is my child's data handled and protected?",
+      answer:
+        "We take privacy seriously. Sashakt collects minimal data and follows strict security practices to protect any information. We never share personal data with third parties without consent. For details, see our privacy policy (coming soon).",
+      emoji: "🔒",
+      category: "Privacy",
+    },
+    {
+      question: "Is there parental control or moderation features?",
+      answer:
+        "Sashakt provides parental guidance content and easy-to-follow recommendations for supervising a child's use. We're building more moderation and parental control tools for future releases.",
+      emoji: "🛡️",
+      category: "Safety",
+    },
+    {
+      question: "Are there offline or low-bandwidth options?",
+      answer:
+        "Some activities are designed to be printable or playable without a constant internet connection. We're working to expand offline support and optimize content for low-bandwidth environments.",
+      emoji: "📥",
+      category: "Access",
+    },
+    {
+      question: "Can content be customized for my child's learning level?",
+      answer:
+        "Yes — activities and games are created with different difficulty levels in mind. We plan to add explicit profile-based customization so parents and teachers can tailor the experience.",
+      emoji: "⚙️",
+      category: "Customization",
+    },
+    {
+      question: "Is Sashakt free to use?",
+      answer:
+        "Sashakt will always be free to use. We won't charge users for accessing the core content and features of the platform.",
+      emoji: "💸",
+      category: "Pricing",
+    },
+    {
+      question: "How do I report inappropriate content or behavior?",
+      answer:
+        "If you encounter inappropriate content or behavior, please contact our support team via the Contact Us page. Include details and screenshots if possible so we can investigate quickly.",
+      emoji: "🚨",
+      category: "Safety",
+    },
+    {
+      question: "How can educators or NGOs partner with Sashakt?",
+      answer:
+        "We welcome partnerships with educators and NGOs. Please use the Contact Us page to share partnership ideas, pilot requests, or collaboration proposals.",
+      emoji: "🤝",
+      category: "Partnerships",
     },
   ]
 
@@ -150,7 +201,10 @@ export default function FAQ() {
                     <div className="px-6 py-6 bg-gradient-to-r from-blue-50 to-cyan-50 border-t-4 border-blue-300 animate-in fade-in slide-in-from-top duration-300">
                       <p className="text-gray-800 leading-relaxed text-lg">{faq.answer}</p>
                       <div className="mt-4 pt-4 border-t-2 border-blue-200">
-                        <button className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 hover:scale-105 transition-all active:scale-95">
+                        <button
+                          onClick={() => router.push('/contact-us')}
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 hover:scale-105 transition-all active:scale-95"
+                        >
                           Learn More 🚀
                         </button>
                       </div>
@@ -169,7 +223,10 @@ export default function FAQ() {
           <div className="mt-16 bg-gradient-to-r from-purple-400 to-pink-400 rounded-2xl p-8 text-white text-center shadow-lg">
             <h3 className="text-2xl font-bold mb-2">Still have questions?</h3>
             <p className="mb-4 opacity-90">Can't find your answer? Visit our contact page or chat with Sunny!</p>
-            <button className="px-6 py-3 bg-white text-purple-600 font-bold rounded-lg hover:bg-gray-100 hover:scale-105 transition-all active:scale-95">
+            <button
+              onClick={() => router.push('/contact-us')}
+              className="px-6 py-3 bg-white text-purple-600 font-bold rounded-lg hover:bg-gray-100 hover:scale-105 transition-all active:scale-95"
+            >
               Get in Touch 💬
             </button>
           </div>
